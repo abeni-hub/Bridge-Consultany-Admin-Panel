@@ -3,12 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from core.models import HeroSection, AboutUs
-from services.models import ServiceSection, Service, HowItWorks, Step
-from testimonials.models import TestimonialSection, Testimonial
-from feedback.models import Feedback
-from blog.models import Blog, Comment
-
+from core.models import HeroSection, AboutUs ,ServiceSection, Service, HowItWorks, Step, TestimonialSection ,Testimonial,Comment,Feedback,Blog
 from .serializers import *
 
 
