@@ -16,7 +16,7 @@ router.register(r'services', ServiceViewSet)
 router.register(r'how-it-works', HowItWorksViewSet)
 router.register(r'steps', StepViewSet)
 
-# TESTIMONIALS
+# TESTIMONIA
 router.register(r'testimonial-sections', TestimonialSectionViewSet)
 router.register(r'testimonials', TestimonialViewSet)
 
