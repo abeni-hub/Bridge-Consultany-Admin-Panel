@@ -13,6 +13,8 @@ from .views import (
     FeedbackViewSet,
     BlogViewSet,
     CommentViewSet,
+    StoryViewSet,
+    StoryResultViewSet
 )
 router = DefaultRouter()
 
@@ -38,6 +40,10 @@ router.register(r'feedback', FeedbackViewSet)
 # BLOG
 router.register(r'blogs', BlogViewSet)
 router.register(r'comments', CommentViewSet)
+
+#STORY
+router.register(r'stories', StoryViewSet)
+router.register(r'story-results', StoryResultViewSet)
 
 
 urlpatterns = [
