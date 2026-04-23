@@ -10,7 +10,7 @@ from core.models import (
     ServiceSection, Service,
     HowItWorks, Step,
     TestimonialSection, Testimonial,
-    Comment, Feedback, Blog
+    Comment, Feedback, Blog , Story , StoryResult
 )
 
 from .serializers import *
@@ -148,3 +148,17 @@ class CommentViewSet(AdminWritePermissionMixin, BaseViewSet):
     serializer_class = CommentSerializer
     filterset_fields = ['status', 'post']
     ordering_fields = ['created_at']
+
+class StoryViewSet(AdminWritePermissionMixin, ModelViewSet):
+    queryset = Story.objects.prefetch_related('results').all()
+    serializer_class = StorySerializer
+    search_fields = ['title', 'client', 'industry']
+    ordering_fields = ['created_at']
+
+
+class StoryResultViewSet(AdminWritePermissionMixin, ModelViewSet):
+    queryset = StoryResult.objects.select_related('story').all()
+    serializer_class = StoryResultSerializer
+    filterset_fields = ['story']
+    ordering_fields = ['id']
+

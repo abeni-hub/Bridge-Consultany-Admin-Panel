@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import HeroSection, AboutUs ,ServiceSection, Service, HowItWorks, Step, TestimonialSection ,Testimonial,Comment,Feedback,Blog
+from core.models import HeroSection, AboutUs ,ServiceSection, Service, HowItWorks, Step, TestimonialSection ,Testimonial,Comment,Feedback,Blog , Story , StoryResult
 def to_camel_case(snake_str):
     parts = snake_str.split('_')
     return parts[0] + ''.join(word.title() for word in parts[1:])
@@ -108,3 +108,16 @@ class BlogSerializer(CamelCaseSerializer):
     class Meta:
         model = Blog
         fields = '__all__'
+
+class StoryResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoryResult
+        fields = "__all__"
+
+
+class StorySerializer(serializers.ModelSerializer):
+    results = StoryResultSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Story
+        fields = "__all__"
