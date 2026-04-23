@@ -106,3 +106,25 @@ class Comment(models.Model):
     comment = models.TextField()
     status = models.CharField(max_length=50, default='pending')  # removed choices
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+# ========================
+# STORIES (PROJECTS)
+# ========================
+
+class Story(models.Model):
+    title = models.CharField(max_length=255)
+    client = models.CharField(max_length=255)
+    industry = models.CharField(max_length=100)
+    duration = models.CharField(max_length=100)
+    image = models.URLField()
+    description = models.TextField()
+    gradient = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class StoryResult(models.Model):
+    story = models.ForeignKey(Story, related_name="results", on_delete=models.CASCADE)
+    metric = models.CharField(max_length=255)
+    value = models.CharField(max_length=50)
+    icon = models.CharField(max_length=100)  # store icon name (e.g., "DollarSign")
