@@ -29,15 +29,10 @@ class ServiceSection(models.Model):
     description = models.TextField()
 
 class Service(models.Model):
-    ICON_CHOICES = [
-        ('chart', 'Chart'),
-        ('code', 'Code'),
-    ]
-
-    section = models.ForeignKey(ServiceSection, related_name="services", on_delete=models.CASCADE)
+    section = models.ForeignKey("ServiceSection", related_name="services", on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    icon = models.CharField(max_length=50, choices=ICON_CHOICES)
+    icon = models.CharField(max_length=100)  # removed choices
     gradient = models.CharField(max_length=100)
     features = models.JSONField()
 
@@ -77,30 +72,19 @@ class Testimonial(models.Model):
             raise ValidationError("Rating must be between 1 and 5")
 
 class Feedback(models.Model):
-    STATUS_CHOICES = [
-        ('new', 'New'),
-        ('read', 'Read'),
-        ('replied', 'Replied'),
-    ]
-
     name = models.CharField(max_length=255)
     email = models.EmailField()
     rating = models.IntegerField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    status = models.CharField(max_length=50, default='new')  # removed choices
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 from django.utils.text import slugify
 
 class Blog(models.Model):
-    STATUS_CHOICES = [
-        ('draft', 'Draft'),
-        ('published', 'Published'),
-    ]
-
     title = models.CharField(max_length=255)
     category = models.CharField(max_length=100)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=50)  # removed choices
     image_url = models.URLField()
     expert = models.CharField(max_length=255)
     content = models.TextField()
@@ -113,15 +97,12 @@ class Blog(models.Model):
         super().save(*args, **kwargs)
 
 
-class Comment(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('approved', 'Approved'),
-        ('rejected', 'Rejected'),
-    ]
+# ========================
 
+
+class Comment(models.Model):
     post = models.ForeignKey(Blog, related_name="comments", on_delete=models.CASCADE)
     user = models.CharField(max_length=255)
     comment = models.TextField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=50, default='pending')  # removed choices
     created_at = models.DateTimeField(auto_now_add=True)
