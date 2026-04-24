@@ -1,6 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from .permissions import CommentPermission
+
 
 from core.models import (
     HeroSection, AboutUs,
@@ -113,6 +115,7 @@ class BlogViewSet(BaseViewSet):
 class CommentViewSet(BaseViewSet):
     queryset = Comment.objects.select_related('post', 'story')
     serializer_class = CommentSerializer
+    permission_classes = [CommentPermission]
     filterset_fields = ['post', 'story', 'status']
 
 

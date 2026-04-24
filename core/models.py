@@ -106,22 +106,14 @@ class Blog(models.Model):
         super().save(*args, **kwargs)
 
 # ========================
-
-# ✅ UPDATED COMMENT (Blog + Story)
+# ✅ SIMPLE COMMENT (NO FK)
 class Comment(models.Model):
-    post = models.ForeignKey(Blog, related_name="comments", on_delete=models.CASCADE, null=True, blank=True)
-    story = models.ForeignKey("Story", related_name="comments", on_delete=models.CASCADE, null=True, blank=True)
-
-    user = models.CharField(max_length=255)
+    full_name = models.CharField(max_length=255)
+    email = models.EmailField()
     comment = models.TextField()
     status = models.CharField(max_length=50, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
 
-
-
-# ========================
-# STORIES (PROJECTS)
-# ========================
 
 class Story(models.Model):
     title = models.CharField(max_length=255)
@@ -131,12 +123,9 @@ class Story(models.Model):
     image = models.URLField()
     description = models.TextField()
     gradient = models.CharField(max_length=100)
-
-    # ✅ NEW
     challenge = models.TextField()
     solution = models.TextField()
     impact = models.TextField()
-
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -144,5 +133,5 @@ class StoryResult(models.Model):
     story = models.ForeignKey(Story, related_name="results", on_delete=models.CASCADE)
     metric = models.CharField(max_length=255)
     value = models.CharField(max_length=50)
-    icon = models.CharField(max_length=100)  # store icon name (e.g., "DollarSign")
+    icon = models.CharField(max_length=100)
     description = models.TextField()
