@@ -112,11 +112,15 @@ class BlogViewSet(BaseViewSet):
     lookup_field = 'slug'
 
 
-class CommentViewSet(BaseViewSet):
-    queryset = Comment.objects.select_related('post', 'story')
+class CommentViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [CommentPermission]
-    filterset_fields = ['post', 'story', 'status']
+
+    # ✅ FIXED
+    filterset_fields = ['status']   # only real fields
+
+    search_fields = ['full_name', 'email', 'comment']
+    ordering_fields = ['created_at']
 
 
 # ========================

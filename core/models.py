@@ -108,9 +108,10 @@ class Blog(models.Model):
 # ========================
 # ✅ SIMPLE COMMENT (NO FK)
 class Comment(models.Model):
-    full_name = models.CharField(max_length=255)
+    fullName = models.CharField(max_length=255)
     email = models.EmailField()
     comment = models.TextField()
+    Company = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(max_length=50, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
 
