@@ -99,10 +99,10 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = "__all__"
 
-    def validate(self, data):
-        if not data.get("post") and not data.get("story"):
-            raise serializers.ValidationError("Provide post or story")
-        return data
+    # def validate(self, data):
+    #     if not data.get("post") and not data.get("story"):
+    #         raise serializers.ValidationError("Provide post or story")
+    #     return data
 
 # ========================
 # BLOG
