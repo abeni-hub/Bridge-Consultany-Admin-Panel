@@ -93,19 +93,30 @@ class Blog(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
 
+            while Blog.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
 
 # ========================
 
-
+# ✅ UPDATED COMMENT (Blog + Story)
 class Comment(models.Model):
-    post = models.ForeignKey(Blog, related_name="comments", on_delete=models.CASCADE)
+    post = models.ForeignKey(Blog, related_name="comments", on_delete=models.CASCADE, null=True, blank=True)
+    story = models.ForeignKey("Story", related_name="comments", on_delete=models.CASCADE, null=True, blank=True)
+
     user = models.CharField(max_length=255)
     comment = models.TextField()
-    status = models.CharField(max_length=50, default='pending')  # removed choices
+    status = models.CharField(max_length=50, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
+
 
 
 # ========================
@@ -120,6 +131,12 @@ class Story(models.Model):
     image = models.URLField()
     description = models.TextField()
     gradient = models.CharField(max_length=100)
+
+    # ✅ NEW
+    challenge = models.TextField()
+    solution = models.TextField()
+    impact = models.TextField()
+
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -128,3 +145,4 @@ class StoryResult(models.Model):
     metric = models.CharField(max_length=255)
     value = models.CharField(max_length=50)
     icon = models.CharField(max_length=100)  # store icon name (e.g., "DollarSign")
+    description = models.TextField()

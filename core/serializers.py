@@ -92,14 +92,20 @@ class FeedbackSerializer(CamelCaseSerializer):
         fields = '__all__'
 
 
-# ========================
-# BLOG
-# ========================
 
-class CommentSerializer(CamelCaseSerializer):
+
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = "__all__"
+
+    def validate(self, data):
+        if not data.get("post") and not data.get("story"):
+            raise serializers.ValidationError("Provide post or story")
+        return data
+
+# ========================
+# BLOG
 
 
 class BlogSerializer(CamelCaseSerializer):
@@ -108,6 +114,17 @@ class BlogSerializer(CamelCaseSerializer):
     class Meta:
         model = Blog
         fields = '__all__'
+
+class StoryResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoryResult
+        fields = "__all__"
+
+
+class StorySerializer(serializers.ModelSerializer):
+    results = StoryResultSerializer(many=True, read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
+
 
 class StoryResultSerializer(serializers.ModelSerializer):
     class Meta:

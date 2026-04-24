@@ -4,7 +4,8 @@ from core.models import (
     ServiceSection, Service,
     HowItWorks, Step,
     TestimonialSection, Testimonial,
-    Feedback, Blog, Comment
+    Feedback, Blog, Comment,
+    Story, StoryResult
 )
 
 
@@ -17,7 +18,7 @@ class Command(BaseCommand):
         # ========================
         # HERO
         # ========================
-        hero = HeroSection.objects.create(
+        HeroSection.objects.create(
             title="Bridge Consulting",
             subtitle="We build scalable business solutions",
             primary_cta_text="Get Started",
@@ -25,16 +26,13 @@ class Command(BaseCommand):
             secondary_cta_text="Learn More",
             secondary_cta_link="https://example.com/about",
             background_image_url="https://picsum.photos/1200/600",
-            stats={
-                "clients": "200+",
-                "projects": "500+"
-            }
+            stats={"clients": "200+", "projects": "500+"}
         )
 
         # ========================
         # ABOUT
         # ========================
-        about = AboutUs.objects.create(
+        AboutUs.objects.create(
             subtitle="Who We Are",
             description="We help businesses grow.",
             mission_title="Our Mission",
@@ -141,6 +139,47 @@ class Command(BaseCommand):
             post=blog,
             user="Alice",
             comment="Great article!",
+            status="approved"
+        )
+
+        # ========================
+        # STORY (NEW)
+        # ========================
+        story = Story.objects.create(
+            title="Digital Banking Transformation",
+            client="Regional Financial Institution",
+            industry="Finance",
+            duration="12 months",
+            image="https://picsum.photos/800/500",
+            description="Complete digital transformation project.",
+            gradient="from-blue-500 to-indigo-700",
+            challenge="Legacy systems were slow and inefficient.",
+            solution="Implemented cloud-based microservices architecture.",
+            impact="Increased performance and customer satisfaction."
+        )
+
+        # STORY RESULTS
+        StoryResult.objects.create(
+            story=story,
+            metric="Digital Adoption",
+            value="85%",
+            icon="TrendingUp",
+            description="Users shifted to digital platforms rapidly."
+        )
+
+        StoryResult.objects.create(
+            story=story,
+            metric="Processing Time",
+            value="60%",
+            icon="Clock",
+            description="Reduced transaction processing time."
+        )
+
+        # STORY COMMENT
+        Comment.objects.create(
+            story=story,
+            user="Ab",
+            comment="Impressive transformation!",
             status="approved"
         )
 
