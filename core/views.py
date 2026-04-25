@@ -128,10 +128,10 @@ class CommentViewSet(ModelViewSet):
 # ========================
 
 class StoryViewSet(BaseViewSet):
-    queryset = Story.objects.prefetch_related('results', 'comments')
+    queryset = Story.objects.all()
     serializer_class = StorySerializer
 
 
 class StoryResultViewSet(BaseViewSet):
-    queryset = StoryResult.objects.select_related('story')
+    queryset = StoryResult.objects.all()
     serializer_class = StoryResultSerializer
