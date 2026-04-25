@@ -135,3 +135,5 @@ class StoryViewSet(BaseViewSet):
 class StoryResultViewSet(BaseViewSet):
     queryset = StoryResult.objects.all()
     serializer_class = StoryResultSerializer
+
+

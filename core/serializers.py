@@ -16,6 +16,9 @@ class CamelCaseSerializer(serializers.ModelSerializer):
 # CORE
 # ========================
 
+
+
+
 class HeroSectionSerializer(CamelCaseSerializer):
     class Meta:
         model = HeroSection
